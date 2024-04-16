@@ -9,7 +9,10 @@ import '../utils/image_utils.dart';
 
 class IsolateInference {
   static const String _debugName = "TFLITE_INFERENCE";
+  // receive port to get message from isolate
   final ReceivePort _receivePort = ReceivePort();
+
+  // isolate instance and send port to send message to isolate
   late Isolate _isolate;
   late SendPort _sendPort;
 
@@ -25,6 +28,7 @@ class IsolateInference {
     _receivePort.close();
   }
 
+  // entry point for isolate inference to run inference on image
   static void entryPoint(SendPort sendPort) async {
     final port = ReceivePort();
     sendPort.send(port.sendPort);

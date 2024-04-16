@@ -114,7 +114,7 @@ class CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver 
     );
     list.add(
       Align(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.topCenter,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -128,13 +128,25 @@ class CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver 
                     .map(
                       (e) => Container(
                         padding: const EdgeInsets.all(8),
-                        color: Colors.transparent,
+                        // color: e.key == '0 correct_pose' ? Colors.green : Colors.red,
                         child: Row(
                           children: [
-                            Flexible(child: Text(e.key)),
+                            Flexible(
+                              child: FittedBox(
+                                child: Text(
+                                  e.key,
+                                  style: TextStyle(
+                                    color: e.key == '1 CORRECT' && e.value > 0.7 ? Colors.green : Colors.red,
+                                  ),
+                                ),
+                              ),
+                            ),
                             const SizedBox(width: 10),
                             Text(
                               e.value.toStringAsFixed(2),
+                              style: TextStyle(
+                                color: e.key == '1 CORRECT' && e.value > 0.7 ? Colors.green : Colors.red,
+                              ),
                             )
                           ],
                         ),
